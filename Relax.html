@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>KnotLearn - Relax Zone</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(#dbeafe, #f0fdf4);
+  padding: 20px;
+  text-align: center;
+  transition: background 0.5s, color 0.5s;
+  cursor: pointer; 
+}
+body.dark { background: #0f172a; color: #e5e7eb; }
+h1 { color: #065f46; font-size: 1.8em; }
+body.dark h1 { color: #a7f3d0; }
+
+.box {
+  background: white;
+  max-width: 480px;
+  margin: auto;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  transition: background 0.5s;
+}
+body.dark .box { background: #020617; }
+
+img { width: 110px; height: 90px; }
+header{ background-color: #0b74de; text-align: center; }
+nav { text-align: center; padding: 10px; background-color: #f2f2f2; }
+nav a { margin: 10px; text-decoration: none; color: #0b74de; font-weight: bold; }
+
+button { padding: 12px 18px; margin: 6px; border: none; border-radius: 20px; background-color: #10b981; color: white; cursor: pointer; font-size: 1em; }
+.song { margin-top: 10px; font-size: 14px; opacity: 0.9; }
+.breath { font-size: 20px; margin-top: 20px; color: #065f46; min-height: 30px; transition: color 0.5s; }
+body.dark .breath { color: #a7f3d0; }
+input[type="range"] { width: 90%; margin-top: 10px; }
+
+@media (max-width: 500px) {
+  h1 { font-size: 1.5em; }
+  button { font-size: 0.9em; padding: 10px 14px; }
+  .box { padding: 15px; }
+  .breath { font-size: 18px; }
+}
+</style>
+</head>
+
+<body>
+<header>
+  <img src="logo.png">
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="subject.html">Subjects</a>
+    <a href="Quiz.html">Quiz</a>
+    <a href="About.html">About</a>
+    <a href="Contact.html">Contact</a>
+    <a href="Relax.html">Relax</a>
+  </nav>
+</header>
+
+<h1>🌿 Relax Zone</h1>
+
+<div class="box">
+  <p>Take a break, breathe, and enjoy calming music.</p>
+
+  <audio id="player"></audio>
+
+  <div>
+    <button id="prevBtn">⏮️ Prev</button>
+    <button id="playPauseBtn">▶️ Play / Pause</button>
+    <button id="nextBtn">⏭️ Next</button>
+    <button id="shuffleBtn">🔀 Shuffle</button>
+  </div>
+  <div class="song" id="songName"></div>
+
+  <div>
+    <label for="volume">Volume:</label>
+    <input type="range" id="volume" min="0" max="1" step="0.01" value="0.5" onchange="changeVolume(this.value)">
+  </div>
+
+  <button onclick="startBreathing()">🌬️ Start Breathing</button>
+  <div class="breath" id="breathText"></div>
+
+  <button onclick="startTimer(5)">⏱ 5 min Timer</button>
+  <button onclick="startTimer(10)">⏱ 10 min Timer</button>
+
+  <button onclick="toggleNight()">🌙 Night Mode</button>
+</div>
+
+<script>
+const playlist = [
+  "music/A-Let-It-Flow-Toni-Braxton.mp3",
+  "music/All-The-Man-Tha-I-Need-Whitney.mp3",
+  "music/Christopher-Muneza-POZ.mp3",
+  "music/Element_Eleeeh-TOMBE.mp3",
+  "music/Element-Eleeeh-MAASO.mp3",
+  "music/Ross-Kana-MOLELA.mp3"
+];
+
+let current = 0;
+const player = document.getElementById("player");
+const songName = document.getElementById("songName");
+
+// Buttons
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+const playPauseBtn = document.getElementById("playPauseBtn");
+const shuffleBtn = document.getElementById("shuffleBtn");
+
+// Load song and update display
+function loadSong() {
+  player.src = playlist[current];
+  songName.innerText = "Now Playing: " + playlist[current].split("/")[1];
+}
+
+// Play immediately
+function playSong() {
+  player.play().catch(() => console.log("Play blocked until user interacts"));
+}
+
+// Next / Prev / Shuffle
+function nextSong() {
+  current = (current + 1) % playlist.length;
+  loadSong();
+  playSong();
+}
+function prevSong() {
+  current = (current - 1 + playlist.length) % playlist.length;
+  loadSong();
+  playSong();
+}
+function shuffleSong() {
+  current = Math.floor(Math.random() * playlist.length);
+  loadSong();
+  playSong();
+}
+
+// Play / Pause toggle
+function playPause() {
+  if (player.paused) player.play().catch(() => console.log("Play blocked"));
+  else player.pause();
+}
+
+// Volume control
+function changeVolume(value) { player.volume = value; }
+
+// Auto-next track
+player.addEventListener("ended", nextSong);
+
+// Breathing
+let steps = ["Breathe in...", "Hold...", "Breathe out..."];
+let index = 0;
+let interval;
+function startBreathing() {
+  index = 0;
+  clearInterval(interval);
+  document.getElementById("breathText").innerText = steps[index];
+  interval = setInterval(() => {
+    index = (index + 1) % steps.length;
+    document.getElementById("breathText").innerText = steps[index];
+  }, 3000);
+}
+
+// Night Mode
+function toggleNight() { document.body.classList.toggle("dark"); }
+
+// Timer
+function startTimer(minutes) {
+  player.play();
+  let seconds = minutes * 60;
+  const timer = setInterval(() => {
+    seconds--;
+    if (seconds <= 0) { clearInterval(timer); player.pause(); alert("Time's up!"); }
+  }, 1000);
+}
+
+// Attach button events
+prevBtn.addEventListener("click", prevSong);
+nextBtn.addEventListener("click", nextSong);
+playPauseBtn.addEventListener("click", playPause);
+shuffleBtn.addEventListener("click", shuffleSong);
+
+// Start first song after first user click anywhere
+document.body.addEventListener('click', function startMusic() {
+  loadSong();
+  playSong();
+  document.body.removeEventListener('click', Play / Pause);
+}, { once: true });
+
+</script>
+</body>
+</html>

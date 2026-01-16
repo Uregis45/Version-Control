@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KnotLearn - Home</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <div><img src="logo.png"></div>
+  <nav>
+    <ul>
+      <li><a href="index.html" id="nav-home">Home</a></li>
+      <li><a href="subject.html" id="nav-subject">Subjects</a></li>
+      <li><a href="Quiz.html" id="nav-quiz">Quiz</a></li>
+      <li><a href="About.html" id="nav-about">About</a></li>
+      <li><a href="Contact.html" id="nav-contact">Contact</a></li>
+      <li><a href="Relax.html" id="nav-relax">Relax</a></li>
+    </ul>
+  </nav>
+
+  </header>
+
+
+  <section class="hero">
+    <h1>Learn anything, anytime!</h1>
+    <p>Step-by-step tutorials and exercises for students of all ages.</p>
+    <a href="subject.html" class="btn">Start Learning</a>
+  </section>
+
+  <section class="subjects">
+    <h2>Featured Subjects</h2>
+    <div class="cards">
+      <div class="card">
+        <h3>Math</h3>
+        <p>Master algebra, geometry, calculus, and more.</p>
+      </div>
+      <div class="card">
+        <h3>Science</h3>
+        <p>Learn physics, chemistry, biology step by step.</p>
+      </div>
+      <div class="card">
+        <h3>Programming</h3>
+        <p>HTML, CSS, JavaScript, Game in Vue</p>
+      </div>
+      <div class="card">
+        <h3>Languages</h3>
+        <p>Improve English, French, Spanish, and more.</p>
+      </div>
+    </div>
+  </section>
+
+<script>
+  function openPage(subject) {
+    window.location.href = subject + ".html";
+  }
+  
+const textData = {
+  en: {
+    home: "Home",
+    subjects: "Subjects",
+    quiz: "Quiz",
+    about: "About",
+    contact: "Contact"
+  },
+  fr: {
+    home: "Accueil",
+    subjects: "Matières",
+    quiz: "Quiz",
+    about: "À propos",
+    contact: "Contact"
+  },
+  rw: {
+    home: "Ahabanza",
+    subjects: "Amasomo",
+    quiz: "Ikizamini",
+    about: "Ibyerekeye",
+    contact: "Twandikire"
+  }
+};
+
+function changeLanguage() {
+  const lang = document.getElementById("languageSelect").value;
+  localStorage.setItem("lang", lang);
+
+  document.getElementById("nav-home").innerText = textData[lang].home;
+  document.getElementById("nav-subjects").innerText = textData[lang].subjects;
+  document.getElementById("nav-quiz").innerText = textData[lang].quiz;
+  document.getElementById("nav-about").innerText = textData[lang].about;
+  document.getElementById("nav-contact").innerText = textData[lang].contact;
+}
+
+function toggleTheme() {
+ localStorage.setItem("theme",
+    document.body.classList.contains("dark") ? "dark" : "light"
+  );
+}
+
+window.onload = function () {
+  const savedLang = localStorage.getItem("lang");
+  const savedTheme = localStorage.getItem("theme");
+
+  if (savedLang) {
+    document.getElementById("languageSelect").value = savedLang;
+    changeLanguage();
+  }
+
+  if (savedTheme === "dark") {
+    document.body.classList.add("dark");
+  }
+};
+
+
+</script>
+
+  <footer>
+    <p>&copy; 2026 KnotLearn. All rights reserved.</p>
+  </footer>
+</body>
+</html>
