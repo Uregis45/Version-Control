@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>KnotLearn - JavaScript Tutorials</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f6f8;
+      padding: 20px;
+    }
+    nav {
+    text-align: center;
+    padding: 10px;
+}
+img{
+  width: 110px;
+  height: 90px;
+}
+nav a {
+    margin: 10px;
+    text-decoration: none;
+    color: whitesmoke;
+    font-weight: bold;
+}
+
+    header {
+      background: #0f39ac;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    h1 {
+      color: #0f4c81;
+    }
+    .lesson {
+      background: white;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    button {
+      padding: 8px 15px;
+      background-color: #0f4c81;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    input {
+      padding: 5px;
+      margin: 5px 0;
+    }
+    code {
+      background: #eee;
+      padding: 5px;
+      display: block;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+ 
+  <img src="logo.png">
+   <p>Learn JavaScript step by step – KnotLearn</p>
+   <nav>
+        <a href="HTML.html">HTML</a>
+        <a href="CSS.html">CSS</a>
+        <a href="JavaScript.html">JavaScript</a>
+       
+    </nav>
+</header>
+<h1>JavaScript Tutorials - KnotLearn</h1>
+
+<!-- Lesson 1 -->
+<div class="lesson">
+  <h2>Lesson 1: What is JavaScript?</h2>
+  <p>JavaScript makes websites interactive.</p>
+  <code>
+    alert("Welcome to KnotLearn!");
+  </code>
+</div>
+
+<!-- Lesson 2 -->
+<div class="lesson">
+  <h2>Lesson 2: Variables</h2>
+  <p>Variables store data.</p>
+  <code>
+    let name = "Student";<br>
+    let age = 15;<br>
+    console.log(name, age);
+  </code>
+</div>
+
+<!-- Lesson 3 -->
+<div class="lesson">
+  <h2>Lesson 3: Button Click</h2>
+  <button onclick="showMessage()">Click Me</button>
+  <p id="msg"></p>
+</div>
+
+<!-- Lesson 4 -->
+<div class="lesson">
+  <h2>Lesson 4: Simple Addition</h2>
+  <input type="number" id="num1" placeholder="Number 1">
+  <input type="number" id="num2" placeholder="Number 2">
+  <br><br>
+  <button onclick="add()">Add</button>
+  <p id="result"></p>
+</div>
+
+<script>
+  function showMessage() {
+    document.getElementById("msg").innerText =
+      "Hello! You clicked the button.";
+  }
+
+  function add() {
+    let a = Number(document.getElementById("num1").value);
+    let b = Number(document.getElementById("num2").value);
+    document.getElementById("result").innerText =
+      "Result: " + (a + b);
+  }
+</script>
+
+</body>
+</html>
